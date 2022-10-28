@@ -1,21 +1,18 @@
 import express from 'express'
+import {
+  createAluno,
+  deleteAluno,
+  getAluno,
+  getAlunos,
+  updateAluno
+} from '../controllers/alunoController.js'
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
-  res.send('Rota de listagem de alunos.')
-})
-router.get('/:id', (req, res) => {
-  res.send('Rota de busca de aluno.')
-})
-router.post('/', (req, res) => {
-  res.send('Rota de cadastro de aluno.')
-})
-router.put('/:id', (req, res) => {
-  res.send('Rota de atualização de aluno.')
-})
-router.delete('/:id', (req, res) => {
-  res.send('Rota de remoção de aluno.')
-})
+router.get('/', getAlunos)
+router.get('/:id', getAluno)
+router.post('/', createAluno)
+router.put('/:id', updateAluno)
+router.delete('/:id', deleteAluno)
 
 export default router

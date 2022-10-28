@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const { Schema } = mongoose
 
-const AlunoSchema = new Schema({
+const InstrutorSchema = new Schema({
   nome: {
     type: String,
     required: true,
@@ -32,13 +32,7 @@ const AlunoSchema = new Schema({
   ativo: {
     type: Boolean,
     default: false
-  },
-  fichas: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Ficha'
-    }
-  ]
-}, { timestamps: true })
+  }
+}, {timestamps: true})
 
-export default mongoose.model('Aluno', AlunoSchema)
+export default mongoose.model('Instrutor', InstrutorSchema)

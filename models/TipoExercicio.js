@@ -15,6 +15,12 @@ const TipoExercicioSchema = new Schema({
     max: 100,
     required: true
   },
+  pesoMaximo: {
+    type: Number,
+    min: 0,
+    max: 200,
+    required: true
+  },
   degrauPeso: {
     type: Number,
     min: 0,
