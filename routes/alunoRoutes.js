@@ -6,13 +6,14 @@ import {
   getAlunos,
   updateAluno
 } from '../controllers/alunoController.js'
+import { verificarToken, verificarUsuario } from '../utils/verificarToken.js'
 
 const router = express.Router()
 
-router.get('/', getAlunos)
-router.get('/:id', getAluno)
-router.post('/', createAluno)
-router.put('/:id', updateAluno)
-router.delete('/:id', deleteAluno)
+router.get('/', verificarToken, getAlunos)
+router.get('/:id', verificarUsuario, getAluno)
+router.post('/', verificarToken, createAluno)
+router.put('/:id', verificarUsuario, updateAluno)
+router.delete('/:id', verificarUsuario, deleteAluno)
 
 export default router
