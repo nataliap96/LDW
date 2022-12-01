@@ -7,12 +7,18 @@ import {
   updateTipoExercicio
 } from '../controllers/tipoExercicioController.js'
 
-const router = express.Router()
+import {
+  verificarAdmin,
+  verificarToken,
+  verificarUsuario
+} from "../utils/verificarToken.js";
 
-router.get('/', getTiposExercicios)
-router.get('/:id', getTipoExercicio)
-router.post('/', createTipoExercicio)
-router.put('/:id', updateTipoExercicio)
-router.delete('/:id', deleteTipoExercicio)
+const router = express.Router();
 
-export default router
+router.get("/", verificarToken, getTiposExercicios);
+router.get("/:id",verificarToken, getTipoExercicio);
+router.post("/",verificarToken, createTipoExercicio);
+router.put("/:id",verificarToken, updateTipoExercicio);
+router.delete("/:id",verificarToken, deleteTipoExercicio);
+
+export default router;

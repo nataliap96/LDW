@@ -5,14 +5,20 @@ import {
   getInstrutor,
   getInstrutores,
   updateInstrutor
-} from '../controllers/instrutorController.js'
+} from '../controllers/instrutorController.js';
 
-const router = express.Router()
+import {
+  verificarAdmin,
+  verificarToken,
+  verificarUsuario
+} from "../utils/verificarToken.js";
 
-router.get('/', getInstrutores)
-router.get('/:id', getInstrutor)
-router.post('/', createInstrutor)
-router.put('/:id', updateInstrutor)
-router.delete('/:id', deleteInstrutor)
+const router = express.Router();
 
-export default router
+router.get("/",verificarToken, getInstrutores);
+router.get("/:id",verificarToken, getInstrutor);
+router.post("/", verificarToken,createInstrutor);
+router.put("/:id",verificarToken, updateInstrutor);
+router.delete("/:id",verificarToken, deleteInstrutor);
+
+export default router;

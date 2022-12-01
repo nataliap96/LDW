@@ -5,14 +5,20 @@ import {
   getGrupoMuscular,
   getGruposMusculares,
   updateGrupoMuscular
-} from '../controllers/grupoMuscularController.js'
+} from '../controllers/grupoMuscularController.js';
 
-const router = express.Router()
+import {
+  verificarAdmin,
+  verificarToken,
+  verificarUsuario
+} from "../utils/verificarToken.js";
 
-router.get('/', getGruposMusculares)
-router.get('/:id', getGrupoMuscular)
-router.post('/', createGrupoMuscular)
-router.put('/:id', updateGrupoMuscular)
-router.delete('/:id', deleteGrupoMuscular)
+const router = express.Router();
 
-export default router
+router.get("/", verificarToken, getGruposMusculares);
+router.get("/:id",verificarToken, getGrupoMuscular);
+router.post("/",verificarToken, createGrupoMuscular);
+router.put("/:id", verificarToken,updateGrupoMuscular);
+router.delete("/:id",verificarToken, deleteGrupoMuscular);
+
+export default router;
