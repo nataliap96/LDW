@@ -1,33 +1,38 @@
-import express from 'express'
-import dotenv from 'dotenv'
-import connectDatabase from './config/db.js'
-import { errorHandling } from './utils/error.js'
-import alunoRoutes from './routes/alunoRoutes.js'
-import exercicioRoutes from './routes/exercicioRoutes.js'
-import instrutorRoutes from './routes/instrutorRoutes.js'
-import grupoMuscularRoutes from './routes/grupoMuscularRoutes.js'
-import tipoExercicioRoutes from './routes/tipoExercicioRoutes.js'
-import fichaRoutes from './routes/fichaRoutes.js'
+import express from 'express';
+import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+import connectDatabase from './config/db.js';
+import { errorHandling } from './utils/error.js';
+import { verificarToken } from './utils/verificarToken.js';
+import authRoutes from './routes/authRoutes.js';
+import alunoRoutes from './routes/alunoRoutes.js';
+import exercicioRoutes from './routes/exercicioRoutes.js';
+import fichaRoutes from './routes/fichaRoutes.js';
+import grupoMuscularRoutes from './routes/grupoMuscularRoutes.js';
+import instrutorRoutes from './routes/instrutorRoutes.js';
+import tipoExercicioRoutes from './routes/tipoExercicioRoutes.js';
 
 //constroi o pipeline
-const app = express()
-dotenv.config()
+const app = express();
+dotenv.config();
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
-app.use('/api/alunos', alunoRoutes)
-app.use('/api/exercicios', exercicioRoutes)
-app.use('/api/instrutores', instrutorRoutes)
-app.use('/api/gruposmusculares', grupoMuscularRoutes)
-app.use('/api/tiposexercicios', tipoExercicioRoutes)
-app.use('/api/fichas', fichaRoutes)
+app.use('/api/auth', authRoutes);
+app.use('/api/alunos', alunoRoutes);
+app.use('/api/exercicios', verificarToken, exercicioRoutes);
+app.use('/api/fichas', verificarToken, fichaRoutes);
+app.use('/api/gruposmusculares', verificarToken, grupoMuscularRoutes);
+app.use('/api/instrutores', verificarToken, instrutorRoutes);
+app.use('/api/tiposexercicios', verificarToken, tipoExercicioRoutes);
 
-app.use(errorHandling)
+app.use(errorHandling);
 
 app.listen(PORT, () => {
-  connectDatabase()
-  console.log(`Servidor rodando na porta ${PORT}`)
-})
+  connectDatabase();
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
